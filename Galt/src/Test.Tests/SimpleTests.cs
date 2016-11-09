@@ -4,15 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace ClassLibrary1
+namespace Test.Tests
 {
     [TestFixture]
-    public class Class1
+    public class SimpleTests
     {
         [Test]
-        public void blblblbl()
+        public void ShouldPass()
         {
-            Assert.Equals( 1, 1 );
+
+        }
+
+        [Test]
+        public void ShouldFail()
+        {
+            Assert.Fail();
         }
     }
 }

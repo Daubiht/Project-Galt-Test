@@ -15,7 +15,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Galt", "src\Galt\Galt.xproj
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CodeCakeBuilder", "src\CodeCakeBuilder\CodeCakeBuilder.xproj", "{9870FA14-0A2D-4D10-8899-D758FE849AF5}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ClassLibrary1", "src\ClassLibrary1\ClassLibrary1.xproj", "{F4A9FB36-FDB6-4A78-AFB1-FD56B0169E94}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Test.Tests", "src\Test.Tests\Test.Tests.xproj", "{D086E606-4D14-4104-B770-53877AE5F3B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,10 @@ Global
 		{9870FA14-0A2D-4D10-8899-D758FE849AF5}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{9870FA14-0A2D-4D10-8899-D758FE849AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9870FA14-0A2D-4D10-8899-D758FE849AF5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4A9FB36-FDB6-4A78-AFB1-FD56B0169E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4A9FB36-FDB6-4A78-AFB1-FD56B0169E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4A9FB36-FDB6-4A78-AFB1-FD56B0169E94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4A9FB36-FDB6-4A78-AFB1-FD56B0169E94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D086E606-4D14-4104-B770-53877AE5F3B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D086E606-4D14-4104-B770-53877AE5F3B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D086E606-4D14-4104-B770-53877AE5F3B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D086E606-4D14-4104-B770-53877AE5F3B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +42,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B6A0556C-F603-42CA-A6E4-EF18DCC49448} = {E5537628-482C-47C2-AA58-23A62A7CB07F}
 		{9870FA14-0A2D-4D10-8899-D758FE849AF5} = {E5537628-482C-47C2-AA58-23A62A7CB07F}
-		{F4A9FB36-FDB6-4A78-AFB1-FD56B0169E94} = {E5537628-482C-47C2-AA58-23A62A7CB07F}
+		{D086E606-4D14-4104-B770-53877AE5F3B9} = {E5537628-482C-47C2-AA58-23A62A7CB07F}
 	EndGlobalSection
 EndGlobal

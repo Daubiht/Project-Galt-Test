@@ -2,9 +2,13 @@
 using Cake.Common.IO;
 using Cake.Common.Solution;
 using Cake.Common.Tools.MSBuild;
+using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.NuGet;
 using Cake.Core;
 using Cake.Core.Diagnostics;
+using System;
+using System.IO;
+using System.Collections.Generic;
 
 namespace CodeCake
 {
@@ -21,26 +25,57 @@ namespace CodeCake
             Task( "Clean" )
                 .Does( () =>
                 {
-                    Cake.CleanDirectories( "**/bin/", d => !d.Path.Segments.Contains( "CodeCakeBuilder" ) );
-                    Cake.CleanDirectories( "**/obj/", d => !d.Path.Segments.Contains( "CodeCakeBuilder" ) );
+                    Directory.Delete( Path.Combine( Cake.Environment.WorkingDirectory.FullPath, "Galt\\bin\\" ), true );
                 } );
 
-            Task( "Build" )
+            Task( "Restore" )
                 .IsDependentOn( "Clean" )
                 .Does( () =>
                 {
-                    using( var tempSln = Cake.CreateTemporarySolutionFile( "../../../../../../Galt.sln" ) )
+                    Cake.DotNetCoreRestore();
+                } );
+
+            Task( "Build" )
+                .IsDependentOn( "Restore" )
+                .Does( () =>
+                {
+                    var listProject = Directory.GetDirectories(Path.GetFullPath("../../../../../../src"));
+
+                    foreach( string proj in listProject )
                     {
-                        tempSln.ExcludeProjectsFromBuild( "CodeCakeBuilder", "AnotherProjectIfNeeded" );
-                        Cake.MSBuild( tempSln.FullPath, new MSBuildSettings()
-                                .SetVerbosity( Verbosity.Minimal )
-                                .SetMaxCpuCount( 1 ) );
+                        string[] projsplitted = proj.Split( '\\' );
+                        if( projsplitted[projsplitted.Length - 1] != "CodeCakeBuilder" )
+                        {
+                            Cake.DotNetCoreBuild( proj );
+                        }
                     }
                 } );
+            Task( "Tests" )
+                .IsDependentOn( "Build" )
+                .Does( () =>
+                 {
+                     //Cake.DotNetCoreExecute()
+                 } );
 
             // The Default task for this script can be set here.
             Task( "Default" )
-                .IsDependentOn( "Build" );
+                .IsDependentOn( "Clean" );
+        }
+
+        public string[] GetListProject()
+        {
+            string[] listProject = Directory.GetDirectories("./");
+
+            foreach( string proj in listProject )
+            {
+                string[] filtredListProject = proj.Split( '\\' );
+                if( filtredListProject[filtredListProject.Length - 1] != "CodeCakeBuilder" )
+                {
+                    Cake.DotNetCoreBuild( proj );
+                }
+            }
+
+            return null;
         }
     }
 }
