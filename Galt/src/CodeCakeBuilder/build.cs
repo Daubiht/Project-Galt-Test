@@ -25,7 +25,23 @@ namespace CodeCake
             Task( "Clean" )
                 .Does( () =>
                 {
-                    Directory.Delete( Path.Combine( Cake.Environment.WorkingDirectory.FullPath, "Galt\\bin\\" ), true );
+                    foreach( string projFolderPath in Directory.GetDirectories( "./" ) )
+                    {
+                        if( projFolderPath.Split( '/' )[1] != "CodeCakeBuilder" )
+                        {
+                            string projFolderFullPath = Path.Combine( Cake.Environment.WorkingDirectory.FullPath, projFolderPath );
+
+                            if( Directory.Exists( projFolderFullPath + "\\bin\\" ) )
+                            {
+                                Directory.Delete( projFolderFullPath + "\\bin\\", true );
+                            }
+
+                            if( Directory.Exists( projFolderFullPath + "\\obj\\" ) )
+                            {
+                                Directory.Delete( projFolderFullPath + "\\obj\\", true );
+                            }
+                        }
+                    }
                 } );
 
             Task( "Restore" )
@@ -39,43 +55,32 @@ namespace CodeCake
                 .IsDependentOn( "Restore" )
                 .Does( () =>
                 {
-                    var listProject = Directory.GetDirectories(Path.GetFullPath("../../../../../../src"));
-
-                    foreach( string proj in listProject )
+                    foreach( string projFolderPath in Directory.GetDirectories( "./" ) )
                     {
-                        string[] projsplitted = proj.Split( '\\' );
-                        if( projsplitted[projsplitted.Length - 1] != "CodeCakeBuilder" )
+                        if( projFolderPath.Split( '/' )[1] != "CodeCakeBuilder" )
                         {
-                            Cake.DotNetCoreBuild( proj );
+                            Cake.DotNetCoreBuild( Path.Combine( Cake.Environment.WorkingDirectory.FullPath, projFolderPath ) );
                         }
                     }
                 } );
-            Task( "Tests" )
-                .IsDependentOn( "Build" )
+
+            Task( "Unit-Tests" )
+                //.IsDependentOn( "Build" )
                 .Does( () =>
                  {
-                     //Cake.DotNetCoreExecute()
+                     foreach( string projFolderPath in Directory.GetDirectories( "./" ) )
+                     {
+                         if( projFolderPath.Split( '/' )[1] != "CodeCakeBuilder" && projFolderPath.Split('.')[1] == "Tests" )
+                         {
+                             Cake.DotNetCoreExecute( Path.Combine( Cake.Environment.WorkingDirectory.FullPath, projFolderPath ));
+                         }
+                     }
+                     
                  } );
 
             // The Default task for this script can be set here.
             Task( "Default" )
-                .IsDependentOn( "Clean" );
-        }
-
-        public string[] GetListProject()
-        {
-            string[] listProject = Directory.GetDirectories("./");
-
-            foreach( string proj in listProject )
-            {
-                string[] filtredListProject = proj.Split( '\\' );
-                if( filtredListProject[filtredListProject.Length - 1] != "CodeCakeBuilder" )
-                {
-                    Cake.DotNetCoreBuild( proj );
-                }
-            }
-
-            return null;
+                .IsDependentOn( "Unit-Tests" );
         }
     }
 }
