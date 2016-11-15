@@ -12,13 +12,14 @@ namespace Test.Tests
         [Test]
         public void ShouldPass()
         {
-
+            Assert.AreEqual( 2, new Class1().Addition( 1, 1 ) );
         }
 
         [Test]
         public void ShouldFail()
         {
-            Assert.Fail();
+            Assert.AreEqual( 1, new Class1().Addition( 1, 1 ) );
+
         }
     }
 }

@@ -1,14 +1,8 @@
-﻿using System.Linq;
-using Cake.Common.IO;
-using Cake.Common.Solution;
-using Cake.Common.Tools.MSBuild;
+﻿using Cake.Common.IO;
 using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.NuGet;
 using Cake.Core;
-using Cake.Core.Diagnostics;
-using System;
-using System.IO;
-using System.Collections.Generic;
+using Cake.Core.IO;
+using Cake.Common.Tools.OpenCover;
 
 namespace CodeCake
 {
@@ -16,7 +10,6 @@ namespace CodeCake
     /// Sample build "script".
     /// It can be decorated with AddPath attributes that inject paths into the PATH environment variable. 
     /// </summary>
-    [AddPath( "CodeCakeBuilder/Tools" )]
     public class Build : CodeCakeHost
     {
         public Build()
@@ -25,21 +18,16 @@ namespace CodeCake
             Task( "Clean" )
                 .Does( () =>
                 {
-                    foreach( string projFolderPath in Directory.GetDirectories( "./" ) )
+                    DirectoryPathCollection AllProj = Cake.GetDirectories( "./*", p => !p.Path.FullPath.Contains("CodeCakeBuilder" ));
+                    foreach( DirectoryPath proj in AllProj )
                     {
-                        if( projFolderPath.Split( '/' )[1] != "CodeCakeBuilder" )
+                        if( Cake.DirectoryExists( proj + "/bin" ) )
                         {
-                            string projFolderFullPath = Path.Combine( Cake.Environment.WorkingDirectory.FullPath, projFolderPath );
-
-                            if( Directory.Exists( projFolderFullPath + "\\bin\\" ) )
-                            {
-                                Directory.Delete( projFolderFullPath + "\\bin\\", true );
-                            }
-
-                            if( Directory.Exists( projFolderFullPath + "\\obj\\" ) )
-                            {
-                                Directory.Delete( projFolderFullPath + "\\obj\\", true );
-                            }
+                            Cake.DeleteDirectory( proj + "/bin", true );
+                        }
+                        if( Cake.DirectoryExists( proj + "/obj" ) )
+                        {
+                            Cake.DeleteDirectory( proj + "/obj", true );
                         }
                     }
                 } );
@@ -55,28 +43,32 @@ namespace CodeCake
                 .IsDependentOn( "Restore" )
                 .Does( () =>
                 {
-                    foreach( string projFolderPath in Directory.GetDirectories( "./" ) )
+                    DirectoryPathCollection AllProj = Cake.GetDirectories( "./*", p => !p.Path.FullPath.Contains("CodeCakeBuilder" ));
+                    foreach( DirectoryPath proj in AllProj )
                     {
-                        if( projFolderPath.Split( '/' )[1] != "CodeCakeBuilder" )
-                        {
-                            Cake.DotNetCoreBuild( Path.Combine( Cake.Environment.WorkingDirectory.FullPath, projFolderPath ) );
-                        }
+                        Cake.DotNetCoreBuild( proj.FullPath );
                     }
                 } );
 
             Task( "Unit-Tests" )
-                //.IsDependentOn( "Build" )
-                .Does( () =>
-                 {
-                     foreach( string projFolderPath in Directory.GetDirectories( "./" ) )
-                     {
-                         if( projFolderPath.Split( '/' )[1] != "CodeCakeBuilder" && projFolderPath.Split('.')[1] == "Tests" )
-                         {
-                             Cake.DotNetCoreExecute( Path.Combine( Cake.Environment.WorkingDirectory.FullPath, projFolderPath ));
-                         }
-                     }
-                     
-                 } );
+                .IsDependentOn( "Build" )
+                .Does( () => {
+                    DirectoryPathCollection projectPaths = Cake.GetDirectories( "./*.Tests" );
+                    foreach( DirectoryPath path in projectPaths )
+                    {
+                        //Cake.DotNetCoreRun( path.FullPath );
+
+                        Cake.OpenCover( tool =>
+                        {
+                            tool.DotNetCoreRun( path.FullPath );
+                        },
+                         new FilePath( "./result.xml" ),
+                         new OpenCoverSettings()
+                            .WithFilter( "+[Test]*" )
+                            .WithFilter( "-[Test.Tests]*" )
+                        );
+                    }
+                } );
 
             // The Default task for this script can be set here.
             Task( "Default" )

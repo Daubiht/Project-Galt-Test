@@ -31,5 +31,4 @@ if (!(Test-Path $msbuildExe)) {
     Throw "Could not find msbuild.exe"
 }
 
-Invoke-Expression "dotnet restore"
 &$msbuildExe $builderProj /p:Configuration=Release
