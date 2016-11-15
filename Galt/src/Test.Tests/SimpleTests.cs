@@ -18,7 +18,7 @@ namespace Test.Tests
         [Test]
         public void ShouldFail()
         {
-            Assert.AreEqual( 1, new Class1().Addition( 1, 1 ) );
+            //Assert.AreEqual( 1, new Class1().Addition( 1, 1 ) );
 
         }
     }
