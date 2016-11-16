@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="0" />
+  <Modules>
+    <Module skippedDueTo="Filter" hash="D8-53-B0-07-8D-F9-9A-13-7D-98-00-E6-F2-C4-C4-74-70-5D-80-7A">
+      <ModulePath>C:\Windows\Microsoft.Net\assembly\GAC_64\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll</ModulePath>
+      <ModuleTime>2015-11-05T19:34:06Z</ModuleTime>
+      <ModuleName>mscorlib</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="A0-13-70-5B-0F-CD-BB-71-34-C8-6E-8A-9A-2E-A1-8C-9B-38-AD-9B">
+      <ModulePath>A:\Bureau\Git-Stuff\Project-Galt-Test\Galt\packages\NUnit.ConsoleRunner\3.5.0\tools\nunit3-console.exe</ModulePath>
+      <ModuleTime>2016-10-11T18:54:10Z</ModuleTime>
+      <ModuleName>nunit3-console</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="EE-77-8B-34-FE-47-61-EA-AD-62-7D-B3-79-79-9C-B7-64-F3-12-03">
+      <ModulePath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</ModulePath>
+      <ModuleTime>2015-11-05T19:36:48Z</ModuleTime>
+      <ModuleName>System</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="23-9B-37-CD-E3-B0-C3-B3-4C-72-D5-84-68-14-6B-07-67-29-6F-32">
+      <ModulePath>A:\Bureau\Git-Stuff\Project-Galt-Test\Galt\packages\NUnit.ConsoleRunner\3.5.0\tools\nunit.engine.api.dll</ModulePath>
+      <ModuleTime>2016-10-11T18:54:10Z</ModuleTime>
+      <ModuleName>nunit.engine.api</ModuleName>
+      <Classes />
+    </Module>
+  </Modules>
+</CoverageSession>

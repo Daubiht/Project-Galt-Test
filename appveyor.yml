@@ -12,9 +12,11 @@ platform: Any CPU
 build:
   parallel: true
 
+before_build: 
+  - dotnet restore
+  
 install:
  - ps: .\Galt\Bootstrap.ps1
 
 build_script:
  - dotnet run -p Galt\src\CodeCakeBuilder -nointeraction
- - nunit-console Galt\src\ClassLibrary1\bin\Release\netstandard1.6\ClassLibrary1.dll

@@ -4,6 +4,8 @@ using Cake.Core;
 using Cake.Core.IO;
 using Cake.Common.Tools.OpenCover;
 using Cake.Common.Tools.NUnit;
+using Cake.Common.Tools.DotNetCore.Restore;
+using System;
 
 namespace CodeCake
 {
@@ -40,8 +42,22 @@ namespace CodeCake
                     Cake.DotNetCoreRestore();
                 } );
 
+            Task("Restore-Tools")
+                .IsDependentOn("Restore")
+                .Does( () =>
+                {
+                    DirectoryPath PackagesDir = new DirectoryPath("../packages");
+
+                    DotNetCoreRestoreSettings dotNetCoreRestoreSettings = new DotNetCoreRestoreSettings();
+
+                    dotNetCoreRestoreSettings.PackagesDirectory = PackagesDir;
+                    dotNetCoreRestoreSettings.ArgumentCustomization = args => args.Append( "./CodeCakeBuilder/project.json" );
+
+                    Cake.DotNetCoreRestore( dotNetCoreRestoreSettings );
+                } );
+
             Task( "Build" )
-                .IsDependentOn( "Restore" )
+                .IsDependentOn( "Restore-Tools" )
                 .Does( () =>
                 {
                     DirectoryPathCollection AllProj = Cake.GetDirectories( "./*", p => !p.Path.FullPath.Contains("CodeCakeBuilder" ));
@@ -55,17 +71,28 @@ namespace CodeCake
                 .IsDependentOn( "Build" )
                 .Does( () =>
                 {
+                    FilePathCollection FilePathTests = Cake.GetFiles("./**/*.Tests.exe");
+                    FilePathCollection FilePathFiltred = Cake.GetFiles("./**/*.Tests.exe");
+
+                    foreach( FilePath path in FilePathTests )
+                    {
+                        if(!Cake.FileExists( path.GetDirectory() + "/nunit.framework.dll" ))
+                        {
+                            FilePathFiltred.Remove( path );
+                        }
+                    }
+
                     Cake.OpenCover( tool =>
                     {
-                        tool.NUnit3( "./**/*.Tests/**/net46/*/**/*.Tests.exe", new NUnit3Settings
+                        tool.NUnit3( FilePathFiltred, new NUnit3Settings
                         {
-                            ToolPath = @"C:\Users\Plop\git\Project-Galt-Test\Galt\packages\NUnit.ConsoleRunner\3.5.0\tools\nunit3-console.exe"
+                            ToolPath = "../packages/NUnit.ConsoleRunner/3.5.0/tools/nunit3-console.exe"
                         } );
                     },
-                     new FilePath( "./result.xml" ),
+                     new FilePath( "../resultOpenCover.xml" ),
                      new OpenCoverSettings
                      {
-                         ToolPath = "C:/Users/Plop/git/Project-Galt-Test/Galt/packages/OpenCover/4.6.519/tools/OpenCover.Console.exe",
+                         ToolPath = "../packages/OpenCover/4.6.519/tools/OpenCover.Console.exe",
                          Register = "User"
                      }
                         .WithFilter( "+[Test]*" )
