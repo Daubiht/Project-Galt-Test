@@ -21,4 +21,4 @@ install:
 build_script:
  - dotnet run -p Galt\src\CodeCakeBuilder -nointeraction
  
- test: off
+test: off
