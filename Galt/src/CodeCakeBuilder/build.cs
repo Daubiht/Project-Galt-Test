@@ -91,13 +91,6 @@ namespace CodeCake
                     );
                 } );
 
-            Task( "Upload-Coverage-Report" )
-                .IsDependentOn( "Unit-Tests" )
-                .Does( () =>
-                {
-                    Cake.CoverallsIo();
-                } );
-
             // The Default task for this script can be set here.
             Task( "Default" )
                 .IsDependentOn( "Unit-Tests" );
