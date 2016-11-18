@@ -152,9 +152,9 @@
       <ModuleName>System.Web</ModuleName>
       <Classes />
     </Module>
-    <Module skippedDueTo="Filter" hash="D5-B7-5C-47-FE-E9-94-F6-5A-5B-6D-36-BB-0D-04-F6-AC-B7-82-4F">
+    <Module skippedDueTo="Filter" hash="74-BB-66-DC-84-16-75-01-12-1C-9F-D1-16-E8-3A-6D-99-84-56-E9">
       <ModulePath>A:\Bureau\Git-Stuff\Project-Galt-Test\Galt\src\Test.Tests\bin\Debug\net46\win7-x64\Test.Tests.exe</ModulePath>
-      <ModuleTime>2016-11-16T14:56:59.9165464Z</ModuleTime>
+      <ModuleTime>2016-11-16T15:22:42.46025Z</ModuleTime>
       <ModuleName>Test.Tests</ModuleName>
       <Classes />
     </Module>
@@ -164,10 +164,10 @@
       <ModuleName>System.Xml</ModuleName>
       <Classes />
     </Module>
-    <Module hash="85-FA-4A-97-E6-23-54-82-E5-35-A6-F8-D2-B6-69-1F-0B-EF-D4-81">
+    <Module hash="F7-41-5D-F4-11-81-E9-D6-A3-12-AB-CC-4F-64-17-FA-2B-30-56-B6">
       <Summary numSequencePoints="3" visitedSequencePoints="3" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" visitedClasses="1" numClasses="1" visitedMethods="1" numMethods="1" />
       <ModulePath>A:\Bureau\Git-Stuff\Project-Galt-Test\Galt\src\Test.Tests\bin\Debug\net46\win7-x64\Test.dll</ModulePath>
-      <ModuleTime>2016-11-16T14:56:57.9534341Z</ModuleTime>
+      <ModuleTime>2016-11-16T15:22:40.4801368Z</ModuleTime>
       <ModuleName>Test</ModuleName>
       <Files>
         <File uid="1" fullPath="A:\Bureau\Git-Stuff\Project-Galt-Test\Galt\src\Test\Class1.cs" />

@@ -10,7 +10,8 @@
     "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
     "OpenCover": "4.6.519",
     "NUnit.Console": "3.5.0",
-    "NUnit.ConsoleRunner": "3.5.0" 
+    "NUnit.ConsoleRunner": "3.5.0",
+    "coveralls.io": "1.3.4"
   },
 
   "commands": {

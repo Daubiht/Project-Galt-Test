@@ -71,20 +71,11 @@ namespace CodeCake
                 .IsDependentOn( "Build" )
                 .Does( () =>
                 {
-                    FilePathCollection FilePathTests = Cake.GetFiles("./**/*.Tests.exe");
-                    FilePathCollection FilePathFiltred = Cake.GetFiles("./**/*.Tests.exe");
-
-                    foreach( FilePath path in FilePathTests )
-                    {
-                        if(!Cake.FileExists( path.GetDirectory() + "/nunit.framework.dll" ))
-                        {
-                            FilePathFiltred.Remove( path );
-                        }
-                    }
+                    FilePathCollection FilePathTests = Cake.GetFiles("./**/*.Tests.exe", p => Cake.FileExists(p.Path+"/nunit.framework.dll"));
 
                     Cake.OpenCover( tool =>
                     {
-                        tool.NUnit3( FilePathFiltred, new NUnit3Settings
+                        tool.NUnit3( FilePathTests, new NUnit3Settings
                         {
                             ToolPath = "../packages/NUnit.ConsoleRunner/3.5.0/tools/nunit3-console.exe"
                         } );
@@ -98,6 +89,13 @@ namespace CodeCake
                         .WithFilter( "+[Test]*" )
                         .WithFilter( "-[Test.Tests]*" )
                     );
+                } );
+
+            Task( "Upload-Coverage-Report" )
+                .IsDependentOn( "Unit-Tests" )
+                .Does( () =>
+                {
+                    Cake.CoverallsIo();
                 } );
 
             // The Default task for this script can be set here.
